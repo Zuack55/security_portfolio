@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio de Seguridad Informática</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path d='M32 4L8 14v16c0 15 10 27 24 30 14-3 24-15 24-30V14L32 4z' fill='%2358a6ff'/><path d='M32 8L12 16v14c0 13 8 23 20 26 12-3 20-13 20-26V16L32 8z' fill='%230d1117'/></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0d1117;
+            color: #c9d1d9;
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid #58a6ff;
+            padding-bottom: 20px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #58a6ff;
+            margin-bottom: 5px;
+            font-weight: normal;
+        }
+
+        h1::before {
+            content: "$ ";
+            color: #7d8590;
+        }
+
+        .subtitle {
+            color: #7d8590;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .project-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            padding: 25px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .project-card:hover {
+            border-color: #58a6ff;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .project-title {
+            font-size: 1.3em;
+            color: #58a6ff;
+            font-weight: normal;
+        }
+
+        .project-type {
+            color: #7d8590;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-description {
+            color: #c9d1d9;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tech-tag {
+            color: #7d8590;
+            font-size: 0.85em;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            color: #c9d1d9;
+            transform: translateY(-2px);
+        }
+
+        .tech-tag::before {
+            content: "#";
+            color: #f85149;
+            margin-right: 2px;
+        }
+
+        .project-link {
+            display: inline-block;
+            color: #58a6ff;
+            text-decoration: none;
+            font-size: 0.9em;
+            border: 1px solid #58a6ff;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: #58a6ff;
+            transition: left 0.3s ease;
+        }
+
+        .project-link:hover::after {
+            left: 0;
+        }
+
+        .project-link:hover {
+            background: #58a6ff;
+            color: #0d1117;
+            transform: translateY(-2px);
+        }
+
+        .project-link::before {
+            content: "> ";
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #7d8590;
+            font-size: 0.85em;
+            border-top: 1px solid #30363d;
+            padding-top: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>security_portfolio - Rodrigo Rafael Aparicio Ramirez</h1>
+            <p class="subtitle">Proyectos de Seguridad Informática y Ciberseguridad</p>
+        </header>
+
+        <div class="projects-list" id="projectsList">
+            <!-- Los proyectos se cargarán aquí -->
+        </div>
+
+        <div class="footer">
+            <p>Desarrollado con enfoque en seguridad y privacidad</p>
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            {
+                title: "Explotación de Vulnerabilidad: EternalBlue",
+                type: "Pentesting",
+                description: "Este Proyecto detalla el proceso de identificación y explotación de la vulnerabilidad Eternal Blue (MS17-010) en un sistema operativo Windows 7 Service Pack 1",
+                technologies: ["Kali Linux", "Nmap", "Windows 7", "Metasploit", "EternalBlue"],
+                github: "https://github.com/Zuack55/eternalblue-lab"
+            },
+            {
+                title: "CVE-2025-49113 en Roundcube Webmail",
+                type: "Pentesting",
+                description: "detalla el proceso de identificación y explotación de la vulnerabilidad CVE-2025-49113, una vulnerabilidad de ejecución remota de código (RCE) que afecta a las versiones de Roundcube Webmail hasta la 1.6.10",
+                technologies: ["CVE-2025-49113", "Python", "Docker", "Roundcube", "Metasploit","Ubuntu","kali linux"],
+                github: "https://github.com/Zuack55/Roundcube-1.6.10-Post-Auth-RCE-CVE-2025-49113-"
+            },
+            {
+                title: "Instalación de la plataforma de ciberseguridad Caldera MITRE",
+                type: "Security Tool",
+                description: "Instalar y Usar Caldera MITRE en Ubuntu – Simulación de Ataques con ATT&CK, un marco de ciberseguridad de código abierto desarrollado por el Centro de Innovación de MITRE",
+                technologies: ["Ubuntu", "Python", "Caldera MITRE", "ATT&CK"],
+                github: "https://github.com/Zuack55/Caldera-MITRE-Guia-de-Instalacion-y-Uso-en-Ubuntu"
+            },
+            {
+                title: "Tácticas de Reclutamiento Malicioso en el Ecosistema Tecnológico",
+                type: "Social Engineering",
+                description: "Este proyecto tiene como objetivo sensibilizar a la comunidad tecnológica sobre las amenazas emergentes en el ámbito del reclutamiento digital",
+                technologies: ["Python", "Phishing", "Ingeniería Social", "Redes Sociales", "Metasploit"],
+                github: "https://github.com/Zuack55/Tacticas_de_Reclutamiento_Malicioso_en_el_Ecosistema_Tecnologico"
+            },
+            {
+                title: "DHCP malicioso y captura de NTLMv2",
+                type: "Network Security",
+                description: "Este Proyectos es una guía exhaustiva que detalla los pasos para realizar un ataque de envenenamiento del protocolo DHCP (Dynamic Host Configuration Protocol) y capturar hashes NTLMv2 en un entorno de red controlado",
+                technologies: ["Windows Server 2019", "Kali Linux", "DHCP", "NTLMv2", "Responder", "Metasploit"],
+                github: "https://github.com/Zuack55/DHCP-malicioso-y-captura-de-NTLMv2"
+            },
+            {
+                title: "Pivoting en Redes",
+                type: "Network Security",
+                description: " Este Proyecto técnico describe de manera detallada un caso práctico de pivoting, ilustrando cómo una máquina comprometida se convierte en un punto de apoyo estratégico para infiltrarse más profundamente en una red.",
+                technologies: ["VM metasploitable", "Kali Linux", "Nmap", "FTP (vsftpd 2.3.4)", "Metasploit", "Pivoting"],
+                github: "https://github.com/Zuack55/Pivoting"
+            },
+            {
+                title: "Hacking Ético en WordPress con Docker",
+                type: "Web Security",
+                description: "Este documento detalla un laboratorio práctico de hacking ético centrado en la configuración y explotación de una página web vulnerable de WordPress utilizando Docker",
+                technologies: ["WordPress", "Docker", "Kali Linux", "Nmap", "WPScan", "Metasploit", "Hashcat"],
+                github: "https://github.com/Zuack55/Hacking-Etico-en-WordPress-con-Docker"
+            },
+            {
+                title: "Ingeniería Social y Phishing: Simulación con SEToolkit y Zphisher",
+                type: "Social Engineering",
+                description: "Este Proyectos fue desarrollado como una herramienta de aprendizaje controlado, detallando el uso de plataformas estándar de la industria como SEToolkit (The Social-Engineer Toolkit) y Zphisher.",
+                technologies: ["Kali Linux", "SEToolkit", "Zphisher"],
+                github: "https://github.com/Zuack55/Ingenieria-Social-y-Phishing"
+            },
+            {
+                title: "Campaña de Phishing en Entorno Controlado (Evilginx)",
+                type: "Social Engineering",
+                description: "El presente Proyecto tiene como objetivo principal describir la simulación de una campaña de phishing llevada a cabo en un entorno de laboratorio controlado. Utilizando la herramienta Evilginx, el propósito de este ejercicio es doble: analizar de forma práctica las técnicas de captura de sesiones de usuario y evaluar la efectividad de los controles de seguridad existentes en un entorno autorizado.",
+                technologies: ["Windows", "Evilginx", "Phishing", "Ingeniería Social","TLS/SSL"],
+                github: "https://github.com/Zuack55/Campa-a-de-phishing-Evilginx"
+            }
+        ];
+
+        function renderProjects() {
+            const list = document.getElementById('projectsList');
+            
+            projects.forEach((project, index) => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                const techTags = project.technologies.map(tech => 
+                    `<span class="tech-tag">${tech}</span>`
+                ).join('');
+                
+                card.innerHTML = `
+                    <div class="project-header">
+                        <h2 class="project-title">${project.title}</h2>
+                        <span class="project-type">${project.type}</span>
+                    </div>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-tech">
+                        ${techTags}
+                    </div>
+                    <a href="${project.github}" target="_blank" class="project-link">view_on_github</a>
+                `;
+                
+                list.appendChild(card);
+            });
+        }
+
+        renderProjects();
+    </script>
+</body>
+</html>
